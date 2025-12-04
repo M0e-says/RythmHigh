@@ -1,16 +1,16 @@
 //OBJECT
 class Note {
   int x, y;
-  float ySpd;
+  float ySpd, hitDist;
   Diff diff;
-  Type type;
+  String type;
+  boolean success;
   
   Note(int x, float ySpd) {
     this.x = x;
     this.y = -100;
     this.ySpd = ySpd;
-    this.diff = Diff.NONE;
-    this.type = Type.NONE; 
+    this.diff = Diff.NONE; 
   }
   
   Note(int x, int y, float ySpd) {
@@ -21,9 +21,10 @@ class Note {
   void applyDiff(Diff diff) {
     this.diff = diff;
   }
-  void applyType(Type type) {
-    this.type = type;
-  }
+  //IN THE CONSTRUCTOR / DELETE LATER
+  //void applyType(Type type) {
+  //  this.type = type;
+  //}
   
   void moveNote() {
     y+=ySpd;
@@ -31,14 +32,14 @@ class Note {
   
   void drawNote() {
     push();
-    fill(125, 40, 200);
+    fill(125, 40, 200,50);
     circle(x, y, 50);
     pop();
   }
 }
 
 enum Diff {NONE, SOONER, LATER, SIZE, OPACITY}
-enum Type {NONE, TRIP, DTD, ROW, DIAG, COLUMN, PAIR}
+
 
 //NOTES
   //REFERENCE IMAGE

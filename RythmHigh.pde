@@ -1,10 +1,21 @@
+
+ // DONE: track when target pressed using boolean, switch back when released (Target Data) 
+ // Done (SOMEWHAT) Send missed notes back to Teacher, store that data somehow
+
+ 
+//  MEH idk i could do better. bad result on miss
+//  class timers - how long / how many patterns sent
+
+/*
+If you dont miss a note very often, then it will up the amount of patterns sent in a row, 
+if you're not doing so hot then itll go down.
+*/
+
 Teacher testTeacher;
 Board testBoard;
 int tempo = 180*10;
 
 StateManager manager; 
-
-
 
 void setup() {
   size(750, 500);
@@ -13,20 +24,42 @@ void setup() {
   manager = new StateManager();
 }
 
-void draw() { // MOVE TO DISPLAY
-  background(200, 100, 0);
-  testBoard.display();
-  for (Note note : testTeacher.createNotes(testBoard.getTargets())) {
-    testBoard.notes.add(note);
-  }
+void draw() {
+  manager.display();
+  manager.update();
 }
 
 void keyPressed() {
-    for (Target target : testBoard.getTargets()) { // MAKE THIS A FUNCITON IN BOARD, WHICH IS GONNA BE A STATE MANAGER, 
-    //eventually become manager.keyResponse(key, keyCode); 
-      println( target.checkHit( testBoard.notes ).y);
-    }
+  manager.keyReact();
+  testTeacher.saveScore();
 }
+
+void keyReleased() {
+  manager.keyRelease();
+}
+
+void mousePressed() {
+  manager.clickReact();
+}
+
+
+
+boolean isMouseOn(int x, int y, int w, int h) {
+  if (mouseX > x && mouseY > y) 
+    if (mouseX < (x+w) && mouseY < (y+h))
+      return true;
+  return false;
+}
+
+//void draw() { // MOVE TO DISPLAY
+
+//}
+
+//void keyPressed() {
+//    // MAKE THIS A FUNCITON IN BOARD, WHICH IS GONNA BE A STATE MANAGER, 
+//    //eventually become manager.keyResponse(key, keyCode); 
+
+//}
 
 
 /*
@@ -39,17 +72,5 @@ void keyPressed() {
 
 FINAL STATE _________________________________________________________________ DO NOT TOUCH
 
-void draw() {
-  manager.display();
-  manager.update();
-}
-
-void keyPressed() {
-  manager.keyReact();
-}
-
-void mousePressed() {
-  manager.keyReact();
-}
 
 */

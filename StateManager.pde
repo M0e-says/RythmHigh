@@ -8,7 +8,8 @@ interface State {
   void update();
   
   void clickReact();
-  void releaseReact();
+  void keyReact();
+  void keyRelease();
 }
 
 class StateManager {
@@ -25,16 +26,16 @@ class StateManager {
   
   //States 
   public void switchToRoam() {
-    state.switchToRoam(this);
+    manager.setState(new RoamState());
   }
   
   public void switchToScore() {
     //TAKES SCREENSHOT, DIMS, AND SWITCHES TO SCORE
-    state.switchToScore(this);
+    manager.setState(new ScoreState());
   }
   
   public void switchToPlay() {
-    state.switchToPlay(this);
+    manager.setState(new PlayState());
   }
   
   public void display() {
@@ -46,36 +47,50 @@ class StateManager {
   }
     
   public void clickReact() {
-    state.update();
+    state.clickReact();
   }
   
     
   public void keyReact() {
-    state.update();
+    state.keyReact();
+  }
+  
+  public void keyRelease() {
+    state.keyRelease();
   }
   
 }
 
 class MenuState implements State {
   void switchToRoam(StateManager manager) {
-
+    manager.switchToRoam();
   }
   
   void switchToScore(StateManager manager) {
-
+    manager.switchToScore();
   }
   
   void switchToPlay(StateManager manager) {
-    
+    manager.switchToPlay();
   }
 
-  void display() {}
+  void display() {
+    rect((width/2)-(width/2)/2, (height/2) - (height/5)/2, (width/2), (height/5));
+  }
   
   void update() {}
   
-  void clickReact() {}
+  void clickReact() {
+    if (isMouseOn((width/2)-(width/2)/2, (height/2) - (height/5)/2, width/2, height/5))
+       switchToPlay(manager);
+  }
+      
   
-  void releaseReact() {}
+  void keyReact() {
+    
+  }
+  
+  void keyRelease() {}
 
 }
 
@@ -98,8 +113,9 @@ class RoamState implements State {
   
   void clickReact() {}
   
-  void releaseReact() {}
+  void keyReact() {}
 
+  void keyRelease() {}
 }
 
 class ScoreState implements State {
@@ -121,8 +137,9 @@ class ScoreState implements State {
   
   void clickReact() {}
   
-  void releaseReact() {}
+  void keyReact() {}
 
+  void keyRelease() {}
 }
 
 
@@ -140,12 +157,24 @@ class PlayState implements State {
     
   }
 
-  void display() {}
+  void display() {
+    background(200, 100, 0);
+    testBoard.display();
+  }
   
-  void update() {}
+  void update() {
+    testBoard.update();
+  }
   
-  void clickReact() {}
+  void clickReact() {
+    
+  }
   
-  void releaseReact() {}
+  void keyReact() {
+    testBoard.checkHits();
+  }
 
+  void keyRelease() {
+    testBoard.releaseHits();
+  }
 }
