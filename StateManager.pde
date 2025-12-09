@@ -159,11 +159,11 @@ class PlayState implements State {
 
   void display() {
     background(200, 100, 0);
-    testBoard.display();
+    board.display();
   }
   
   void update() {
-    testBoard.update();
+    board.update();
   }
   
   void clickReact() {
@@ -171,10 +171,10 @@ class PlayState implements State {
   }
   
   void keyReact() {
-    testBoard.checkHits();
+    board.checkHits();
   }
 
   void keyRelease() {
-    testBoard.releaseHits();
+    board.releaseHits();
   }
 }

@@ -1,4 +1,3 @@
-
  // DONE: track when target pressed using boolean, switch back when released (Target Data) 
  // Done (SOMEWHAT) Send missed notes back to Teacher, store that data somehow
 
@@ -12,15 +11,16 @@ if you're not doing so hot then itll go down.
 */
 
 Teacher testTeacher;
-Board testBoard;
+Board board;
 int tempo = 180*10;
 
 StateManager manager; 
 
 void setup() {
   size(750, 500);
+  //fullScreen();
   testTeacher =  new Teacher();
-  testBoard = new Board(testTeacher, ScoreBoard.getInstance());
+  board = new Board(testTeacher, ScoreBoard.getInstance());
   manager = new StateManager();
 }
 
@@ -31,7 +31,6 @@ void draw() {
 
 void keyPressed() {
   manager.keyReact();
-  testTeacher.saveScore();
 }
 
 void keyReleased() {

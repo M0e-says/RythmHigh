@@ -1,7 +1,7 @@
-NONE: b  ,400
-ROW:bbbb,1300
-TRIP:bbb,1000
+NONE: b  ,350
+ROW:bbbb,350
+TRIP:bbb ,350
 DIAG:   b  b  b  b   ,1300
-COLM:b   b   b   ,1400
-PAIR:bb  ,300
-SPAIR:b b ,300
+COLM:b   b   b   ,975
+PAIR:bb  ,350
+SPAIR:b b ,350

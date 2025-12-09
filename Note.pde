@@ -1,21 +1,20 @@
 //OBJECT
 class Note {
-  int x, y;
+  float x, y;
   float ySpd, hitDist;
   Diff diff;
   String type;
   boolean success;
+  PImage chalkNote = loadImage("chalkNote.png");
   
-  Note(int x, float ySpd) {
+  Note(float x, float y, float ySpd, String type) {
     this.x = x;
-    this.y = -100;
+    this.y = y;
     this.ySpd = ySpd;
     this.diff = Diff.NONE; 
-  }
-  
-  Note(int x, int y, float ySpd) {
-    this(x, ySpd);
-    this.y = y;
+    this.type = type;
+    
+    chalkNote.resize(57, 57);
   }
   
   void applyDiff(Diff diff) {
@@ -32,10 +31,20 @@ class Note {
   
   void drawNote() {
     push();
+    imageMode(CENTER);
     fill(125, 40, 200,50);
-    circle(x, y, 50);
+    //circle(x, y, 50);
+    image(chalkNote, x, y);
     pop();
   }
+  
+  String getType() {
+    return type;
+  }
+  
+  //void toString() {
+  
+  //}
 }
 
 enum Diff {NONE, SOONER, LATER, SIZE, OPACITY}

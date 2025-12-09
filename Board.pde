@@ -7,6 +7,7 @@ class Board {
     HashMap<String, Target> targets = new HashMap<>();
     String sequence  = "asdfjkl;";
     int buttonTimer;
+    PImage chalkboard = loadImage("chalkboard.jpg");
   
     Board(Teacher teacher, ScoreBoard grades) {
       this.teacher = teacher;
@@ -14,25 +15,37 @@ class Board {
       
       for (int i = 0; i < teacher.targetCount; i++) {
         //Adds Target to HashMap; divides width by targetCount+1 to set the correct X position.
-        targets.put( ""+sequence.charAt(i), new Target( (width/( teacher.targetCount+1 ))*(i+1) ) );
+        targets.put( ""+sequence.charAt(i), new Target(width*(2.4/3), height-50, i) );
       }
+      
+      chalkboard.resize(int(width*(2.2/3)), int(height-100));
     }
     
     void display() {
+      push(); 
+      translate(width*(0.6/3), 50);
+
+      image(chalkboard, width*(0.1/3),0);
       for(Note n : notes) {
         n.drawNote(); 
       }
       
       for(Target t : targets.values())
         t.drawTarget();
+      pop();
     } 
     
     void update() {
-        if (testTeacher.num > 1)
-          for (Note note : testTeacher.createNotes( targets.values().toArray(new Target[0]) ) ){
-            testBoard.notes.add(note);
-        } //<>//
-      
+       if (testTeacher.numPatterns > 0) {
+         for (Note note : testTeacher.createNotes( targets.values().toArray(new Target[0]) ) ){
+           board.notes.add(note);
+         } 
+       } else if (notes.size() < 1 ) {
+          testTeacher.saveScore();
+          // SWITCH TO SCORE BOARD, 
+          // THEN SWITCH TO NEW GAME!
+          
+        }
       
       for(Note n : notes) {
         n.moveNote(); 
@@ -43,6 +56,7 @@ class Board {
             notes.remove(i);
           } else if (notes.get(i).y > height+50) {
             teacher.storeMissed(notes.get(i));
+            println("note stored");
             notes.remove(i);
           } 
         }
